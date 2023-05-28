@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-const Loading = () => {
+const LoadingSpinner = () => {
 	return (
 		<div className='w-full flex-center'>
 			<Image
@@ -16,4 +16,4 @@ const Loading = () => {
 	);
 };
 
-export default Loading;
+export default LoadingSpinner;
