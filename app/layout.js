@@ -1,4 +1,5 @@
-import '../styles/globals.css';
+import '@/styles/globals.css';
+import Provider from '@/components/provider/Provider';
 
 export const metadata = {
 	title: 'AI - Prompt Sharing',
@@ -8,7 +9,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang='en'>
-			<body>{children}</body>
+			<body>
+				<Provider>
+					<div className='main'>
+						<div className='gradient' />
+					</div>
+
+					<main className='app'>{children}</main>
+				</Provider>
+			</body>
 		</html>
 	);
 }
