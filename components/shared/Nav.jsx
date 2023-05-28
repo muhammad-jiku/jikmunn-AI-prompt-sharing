@@ -12,13 +12,10 @@ const Nav = () => {
 	const [toggleDropdown, setToggleDropdown] = useState(false);
 
 	useEffect(() => {
-		const setUpProviders = async () => {
-			const response = await getProviders();
-
-			setProviders(response);
-		};
-
-		setUpProviders();
+		(async () => {
+			const res = await getProviders();
+			setProviders(res);
+		})();
 	}, []);
 
 	return (
@@ -94,7 +91,7 @@ const Nav = () => {
 						height={37}
 						className='rounded-full'
 						alt='profile'
-						onClick={() => setToggleDropdown((prev) => !prev)}
+						onClick={() => setToggleDropdown(!toggleDropdown)}
 					/>
 
 					{toggleDropdown && (
