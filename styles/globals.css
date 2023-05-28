@@ -6,8 +6,8 @@
 @tailwind utilities;
 
 * {
-	margin: 0;
-	padding: 0;
+	/* margin: 0;
+	padding: 0; */
 	box-sizing: border-box;
 	/* font-family: 'Eudoxus Sans', sans-serif; */
 	/* font-family: 'Poppins', sans-serif; */
@@ -17,8 +17,8 @@
 
 body {
 	overflow-x: hidden;
-	background-color: black;
-	color: whitesmoke;
+	/* background-color: black;
+	color: whitesmoke; */
 }
 
 .main {

@@ -1,5 +1,6 @@
 import '@/styles/globals.css';
 import Provider from '@/components/provider/Provider';
+import Nav from '@/components/shared/Nav';
 
 export const metadata = {
 	title: 'AI - Prompt Sharing',
@@ -14,7 +15,7 @@ export default function RootLayout({ children }) {
 					<div className='main'>
 						<div className='gradient' />
 					</div>
-
+					<Nav />
 					<main className='app'>{children}</main>
 				</Provider>
 			</body>
