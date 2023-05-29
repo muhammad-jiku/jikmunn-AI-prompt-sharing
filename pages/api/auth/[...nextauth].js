@@ -34,12 +34,23 @@ const handler = NextAuth({
 		}),
 	],
 	callbacks: {
+		jwt: async ({ token, user }) => {
+			console.log('jwt callback token', token);
+			console.log('jwt callback user', user);
+			user && (token.user = user);
+			return token;
+		},
 		async session({ session, token, user }) {
-			console.log('session callback  ', session);
+			console.log('session callback no.1  ', session);
 			console.log('session token callback ', token);
 			console.log('session user callback ', user);
 			// Send properties to the client, like an access_token and user id from a provider.
 			// store the user id from MongoDB to session
+			session.user = token.user;
+			// delete password from session
+			delete session?.user?.password;
+
+			console.log('session callback no.2 ', session);
 			const sessionUser = await User.findOne({ email: session.user.email });
 			session.user.id = sessionUser._id.toString();
 
