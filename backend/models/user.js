@@ -10,7 +10,7 @@ const UserSchema = new Schema(
 		password: {
 			type: String,
 			minLength: [6, 'Invalid password length!'],
-			required: [true, 'Password is required!'],
+			// required: [true, 'Password is required!'],
 		},
 		username: {
 			type: String,

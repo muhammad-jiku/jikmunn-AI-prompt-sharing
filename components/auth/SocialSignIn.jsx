@@ -3,10 +3,18 @@
 import React from 'react';
 import googleLogo from '../../assets/google.png';
 import githubLogo from '../../assets/github.png';
+import { signIn } from 'next-auth/react';
 
 const SocialSignIn = () => {
 	const handleGoogleLogin = async () => {
 		console.log('google sign in');
+		try {
+			await signIn('google', {
+				callbackUrl: '/',
+			});
+		} catch (err) {
+			console.log('google error => ', err);
+		}
 	};
 	const handleGithubLogin = async () => {
 		console.log('github sign in');
