@@ -12,9 +12,9 @@ const SocialSignIn = () => {
 		console.log('github sign in');
 	};
 	return (
-		<div>
+		<div className='flex flex-col md:flex-row'>
 			<button
-				className='btn btn-outline btn-primary w-full my-2'
+				className='bg-white hover:bg-gray-100 text-gray-800 font-semibold border border-gray-400 py-2 px-4 m-2 rounded-full w-full flex justify-center items-center'
 				onClick={handleGoogleLogin}
 			>
 				Continue with{' '}
@@ -25,7 +25,7 @@ const SocialSignIn = () => {
 				/>{' '}
 			</button>{' '}
 			<button
-				className='btn btn-outline btn-primary w-full my-2'
+				className='bg-white hover:bg-gray-100 text-gray-800 font-semibold border border-gray-400 py-2 px-4 m-2 rounded-full w-full flex justify-center items-center'
 				onClick={handleGithubLogin}
 			>
 				Continue with{' '}

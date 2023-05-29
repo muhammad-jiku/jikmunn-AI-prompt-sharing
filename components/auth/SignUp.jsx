@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useState } from 'react';
+import SocialSignIn from './SocialSignIn';
 
 export default function SignUp() {
 	const [username, setUserName] = useState('');
@@ -13,12 +15,9 @@ export default function SignUp() {
 	};
 
 	return (
-		<div>
-			<form
-				onSubmit={handleSubmit}
-				className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
-			>
-				<label>
+		<div className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'>
+			<form onSubmit={handleSubmit}>
+				<label className='my-2'>
 					<span className='font-satoshi font-semibold text-base text-gray-700'>
 						Username
 					</span>
@@ -32,7 +31,7 @@ export default function SignUp() {
 						className='form_input'
 					/>
 				</label>
-				<label>
+				<label className='my-2'>
 					<span className='font-satoshi font-semibold text-base text-gray-700'>
 						Email
 					</span>
@@ -46,7 +45,7 @@ export default function SignUp() {
 						className='form_input'
 					/>
 				</label>
-				<label>
+				<label className='my-2'>
 					<span className='font-satoshi font-semibold text-base text-gray-700'>
 						Password
 					</span>
@@ -61,7 +60,7 @@ export default function SignUp() {
 					/>
 				</label>
 
-				<div className='flex-end mx-3 mb-5 gap-4'>
+				<div className='flex-end mx-3 my-2 gap-4'>
 					<button
 						type='submit'
 						className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
@@ -69,7 +68,16 @@ export default function SignUp() {
 						Sign Up
 					</button>
 				</div>
+				<p className='text-center font-bold'>
+					Already have an account?
+					<Link href={`/sign-in`}>
+						<span className='text-primary cursor-pointer'> sign in now!</span>
+					</Link>
+				</p>
 			</form>
+			<div>
+				<SocialSignIn />
+			</div>
 		</div>
 	);
 }
