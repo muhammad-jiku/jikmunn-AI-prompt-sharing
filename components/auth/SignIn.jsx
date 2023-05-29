@@ -3,14 +3,41 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import SocialSignIn from './SocialSignIn';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
+	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(email, password);
+
+		try {
+			const existedUser = {
+				email,
+				password,
+			};
+
+			const data = await signIn('credentials', {
+				redirect: false,
+				email: existedUser?.email,
+				password: existedUser?.password,
+				callbackUrl: '/',
+				redirect: false,
+			});
+
+			console.log('credentials data', data);
+			if (data?.ok) {
+				// window.location.href = '/';
+
+				router.push(data?.url);
+			}
+		} catch (err) {
+			console.log('sign in err', err);
+		}
 	};
 
 	return (

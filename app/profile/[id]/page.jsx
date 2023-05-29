@@ -1,6 +1,8 @@
 import { UserProfile } from '@/components';
 import React from 'react';
 
-export default function UserProfilePage() {
+const Page = () => {
 	return <UserProfile />;
-}
+};
+
+export default Page;

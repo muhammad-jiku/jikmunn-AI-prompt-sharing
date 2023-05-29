@@ -1,6 +1,8 @@
 import { UpdatePrompt } from '@/components';
 import React from 'react';
 
-export default function UpdatePromptPage() {
+const Page = () => {
 	return <UpdatePrompt />;
-}
+};
+
+export default Page;

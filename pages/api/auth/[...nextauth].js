@@ -5,10 +5,20 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcryptjs';
 
-const handler = NextAuth({
+console.log({
+	NEXTAUTH_SECRET: `${process.env.NEXTAUTH_SECRET}`,
+	NEXTAUTH_URL: `${process.env.NEXTAUTH_URL}`,
+	GOOGLE_CLIENT_ID: `${process.env.GOOGLE_CLIENT_ID}`,
+	GOOGLE_CLIENT_SECRET: `${process.env.GOOGLE_CLIENT_SECRET}`,
+});
+
+export const authOptions = {
+	// Configure one or more authentication providers
 	providers: [
 		CredentialsProvider({
 			async authorize(credentials, req) {
+				console.log('credentials', credentials);
+				// console.log('req', req);
 				await connectToDB();
 
 				const { email, password } = credentials;
@@ -35,12 +45,15 @@ const handler = NextAuth({
 	],
 	callbacks: {
 		jwt: async ({ token, user }) => {
-			console.log('jwt callback token', token);
+			console.log('---------------------JWT--------------------------');
+			console.log('jwt callback token no.1', token);
 			console.log('jwt callback user', user);
 			user && (token.user = user);
+			console.log('jwt callback token no.2 ', token);
 			return token;
 		},
 		async session({ session, token, user }) {
+			console.log('---------------------SESSION--------------------------');
 			console.log('session callback no.1  ', session);
 			console.log('session token callback ', token);
 			console.log('session user callback ', user);
@@ -53,10 +66,13 @@ const handler = NextAuth({
 			console.log('session callback no.2 ', session);
 			const sessionUser = await User.findOne({ email: session.user.email });
 			session.user.id = sessionUser._id.toString();
+			console.log('session user', sessionUser);
+			console.log('session callback no.3', session);
 
 			return session;
 		},
 		async signIn({ user, account, profile, email, credentials }) {
+			console.log('---------------------SIGN-IN--------------------------');
 			console.log('sign in user callback  ', user);
 			console.log('sign in account callback ', account);
 			console.log('sign in profile callback ', profile);
@@ -68,7 +84,7 @@ const handler = NextAuth({
 
 					// check if user already exists
 					const userExists = await User.findOne({ email: profile.email });
-
+					console.log('EXISTING', userExists);
 					// if not, create a new document and save user in MongoDB
 					if (!userExists) {
 						await User.create({
@@ -95,6 +111,6 @@ const handler = NextAuth({
 		strategy: 'jwt',
 		maxAge: 30 * 24 * 60 * 60,
 	},
-});
+};
 
-export { handler as GET, handler as POST };
+export default NextAuth(authOptions);

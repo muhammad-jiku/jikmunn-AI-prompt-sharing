@@ -1,6 +1,8 @@
 import { CreatePrompt } from '@/components';
 import React from 'react';
 
-export default function CreatePromptpage() {
+const Page = () => {
 	return <CreatePrompt />;
-}
+};
+
+export default Page;
