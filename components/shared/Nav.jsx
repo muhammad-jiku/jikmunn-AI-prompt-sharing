@@ -8,15 +8,17 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 const Nav = () => {
 	const { data: session } = useSession();
 
-	const [providers, setProviders] = useState(null);
+	console.log('session data...', session);
+
+	// const [providers, setProviders] = useState(null);
 	const [toggleDropdown, setToggleDropdown] = useState(false);
 
-	useEffect(() => {
-		(async () => {
-			const res = await getProviders();
-			setProviders(res);
-		})();
-	}, []);
+	// useEffect(() => {
+	// 	(async () => {
+	// 		const res = await getProviders();
+	// 		setProviders(res);
+	// 	})();
+	// }, []);
 
 	return (
 		<nav className='flex-between w-full mb-16 p-3'>
@@ -65,7 +67,7 @@ const Nav = () => {
 					</div>
 				) : (
 					<>
-						{console.log('providers info...', providers)}
+						{/* {console.log('providers info...', providers)} */}
 						{/* {providers &&
 						Object.values(providers).map((provider) => (
 							<button

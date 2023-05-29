@@ -3,15 +3,50 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import SocialSignIn from './SocialSignIn';
+import { useRouter } from 'next/navigation';
 
 export default function SignUp() {
+	const router = useRouter();
+
 	const [username, setUserName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(username, email, password);
+
+		const newUser = {
+			username,
+			email,
+			password,
+		};
+
+		// sign up method
+		await fetch('http://localhost:3000/api/auth/sign-up', {
+			method: 'POST',
+			headers: {
+				// authorization: `Bearer ${localStorage?.getItem('accessToken')}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(newUser),
+		})
+			.then((res) => {
+				console.log('res ', res);
+				return res.json();
+			})
+			.then((data) => {
+				if (data?.success) {
+					console.log('sign up data ', data);
+					console.log('sign up data message', data?.message);
+					router.push('/');
+				} else {
+					console.log('Something went wrong!');
+				}
+			})
+			.catch((err) => {
+				console.log('sign up err', err);
+			});
 	};
 
 	return (
