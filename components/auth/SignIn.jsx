@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function SignIn() {
-	const [email, setEmail] = useState();
-	const [password, setPassword] = useState();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -25,8 +25,8 @@ export default function SignIn() {
 					<input
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						type='text'
-						placeholder='email'
+						type='email'
+						placeholder='Email'
 						required
 						className='form_input'
 					/>
@@ -39,8 +39,8 @@ export default function SignIn() {
 					<input
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						type='text'
-						placeholder='#Tag'
+						type='password'
+						placeholder='Password'
 						required
 						className='form_input'
 					/>

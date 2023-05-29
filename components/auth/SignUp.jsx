@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 
 export default function SignUp() {
-	const [username, setUserName] = useState();
-	const [email, setEmail] = useState();
-	const [password, setPassword] = useState();
+	const [username, setUserName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -27,7 +27,7 @@ export default function SignUp() {
 						value={username}
 						onChange={(e) => setUserName(e.target.value)}
 						type='text'
-						placeholder='email'
+						placeholder='Username'
 						required
 						className='form_input'
 					/>
@@ -40,8 +40,8 @@ export default function SignUp() {
 					<input
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						type='text'
-						placeholder='email'
+						type='email'
+						placeholder='Email'
 						required
 						className='form_input'
 					/>
@@ -54,8 +54,8 @@ export default function SignUp() {
 					<input
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						type='text'
-						placeholder='#Tag'
+						type='password'
+						placeholder='Password'
 						required
 						className='form_input'
 					/>
