@@ -44,12 +44,29 @@ export const authOptions = {
 		}),
 	],
 	callbacks: {
-		jwt: async ({ token, user }) => {
+		async jwt({ token, user, account, profile, isNewUser }) {
 			console.log('---------------------JWT--------------------------');
 			console.log('jwt callback token no.1', token);
-			console.log('jwt callback user', user);
+			console.log('jwt callback user ', user);
+			console.log('jwt callback account ', account);
+			console.log('jwt callback profile ', profile);
+			console.log('jwt callback new user', isNewUser);
 			user && (token.user = user);
+
 			console.log('jwt callback token no.2 ', token);
+			console.log('jwt callback token user', token.user);
+
+			if (account?.provider === 'google') {
+				try {
+					await connectToDB();
+					const existedUser = await User.findOne({ email: token.user.email });
+					console.log('EXISTING user...', existedUser);
+					existedUser && (token.user = existedUser);
+				} catch (error) {
+					console.log('jwt callback error', error);
+				}
+			}
+
 			return token;
 		},
 		async session({ session, token, user }) {
