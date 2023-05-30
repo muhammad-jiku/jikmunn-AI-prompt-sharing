@@ -16,9 +16,18 @@ const SocialSignIn = () => {
 			console.log('google error => ', err);
 		}
 	};
+
 	const handleGithubLogin = async () => {
 		console.log('github sign in');
+		try {
+			await signIn('github', {
+				callbackUrl: '/',
+			});
+		} catch (err) {
+			console.log('github error => ', err);
+		}
 	};
+
 	return (
 		<div className='flex flex-col md:flex-row'>
 			<button

@@ -3,6 +3,7 @@ import { connectToDB } from '@/backend/utils/database';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
 import bcrypt from 'bcryptjs';
 
 console.log({
@@ -10,6 +11,8 @@ console.log({
 	NEXTAUTH_URL: `${process.env.NEXTAUTH_URL}`,
 	GOOGLE_CLIENT_ID: `${process.env.GOOGLE_CLIENT_ID}`,
 	GOOGLE_CLIENT_SECRET: `${process.env.GOOGLE_CLIENT_SECRET}`,
+	GITHUB_CLIENT_ID: `${process.env.GITHUB_CLIENT_ID}`,
+	GITHUB_CLIENT_SECRET: `${process.env.GITHUB_CLIENT_SECRET}`,
 });
 
 export const authOptions = {
@@ -42,6 +45,10 @@ export const authOptions = {
 			clientId: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 		}),
+		GitHubProvider({
+			clientId: process.env.GITHUB_CLIENT_ID,
+			clientSecret: process.env.GITHUB_CLIENT_SECRET,
+		}),
 	],
 	callbacks: {
 		async jwt({ token, user, account, profile, isNewUser }) {
@@ -57,6 +64,17 @@ export const authOptions = {
 			console.log('jwt callback token user', token.user);
 
 			if (account?.provider === 'google') {
+				try {
+					await connectToDB();
+					const existedUser = await User.findOne({ email: token.user.email });
+					console.log('EXISTING user...', existedUser);
+					existedUser && (token.user = existedUser);
+				} catch (error) {
+					console.log('jwt callback error', error);
+				}
+			}
+
+			if (account?.provider === 'github') {
 				try {
 					await connectToDB();
 					const existedUser = await User.findOne({ email: token.user.email });
@@ -95,6 +113,7 @@ export const authOptions = {
 			console.log('sign in profile callback ', profile);
 			console.log('sign in email callback ', email);
 			console.log('sign in credentials callback ', credentials);
+
 			if (account.provider === 'google') {
 				try {
 					await connectToDB();
@@ -117,6 +136,30 @@ export const authOptions = {
 					return false;
 				}
 			}
+
+			if (account.provider === 'github') {
+				try {
+					await connectToDB();
+
+					// check if user already exists
+					const userExists = await User.findOne({ email: user.email });
+					console.log('EXISTING', userExists);
+					// if not, create a new document and save user in MongoDB
+					if (!userExists) {
+						await User.create({
+							email: user.email,
+							username: user.name.replace(' ', '').toLowerCase(),
+							image: user.image,
+						});
+					}
+
+					return true;
+				} catch (error) {
+					console.log('Error checking if user exists: ', error.message);
+					return false;
+				}
+			}
+
 			return true;
 		},
 	},
