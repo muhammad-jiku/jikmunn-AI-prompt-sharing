@@ -1,20 +1,38 @@
 import Prompt from '@/backend/models/prompt';
 import { connectToDB } from '@/backend/utils/database';
 
-export const POST = async (request) => {
-	const { userId, prompt, tag } = await request.json();
+export default async function handler(req, res) {
+	const { userId, prompt, tag } = await req.body;
 
-	try {
-		await connectToDB();
-		const newPrompt = new Prompt({ creator: userId, prompt, tag });
+	if (req.method === 'POST') {
+		// Process a POST request
+		try {
+			await connectToDB();
+			console.log('backend prompt info', { userId, prompt, tag });
 
-		await newPrompt.save();
-		return new Response(JSON.stringify(newPrompt), {
-			status: 201,
-		});
-	} catch (error) {
-		return new Response('Failed to create a new prompt', {
-			status: 500,
+			const newPrompt = await new Prompt({
+				creator: userId,
+				prompt,
+				tag,
+			});
+
+			const savedPrompt = await newPrompt.save();
+
+			res.status(201).json({
+				success: true,
+				message: 'Prompt added successfully!!',
+				data: savedPrompt,
+			});
+		} catch (error) {
+			console.log(error);
+			return res.status(500).json({
+				success: false,
+				message: 'Something went wrong',
+			});
+		}
+	} else {
+		return res.status(500).json({
+			message: 'Something went wrong',
 		});
 	}
-};
+}

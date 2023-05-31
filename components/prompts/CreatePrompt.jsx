@@ -19,19 +19,37 @@ const CreatePrompt = () => {
 		e.preventDefault();
 		setIsSubmitting(true);
 
-		try {
-			const response = await fetch('/api/prompt/new', {
-				method: 'POST',
-				body: JSON.stringify({
-					prompt: post.prompt,
-					userId: session?.user.id,
-					tag: post.tag,
-				}),
-			});
+		const newPrompt = {
+			prompt: post.prompt,
+			userId: session?.user.id,
+			tag: post.tag,
+		};
 
-			if (response.ok) {
-				router.push('/');
-			}
+		try {
+			await fetch('/api/prompt/new', {
+				method: 'POST',
+				headers: {
+					// authorization: `Bearer ${localStorage?.getItem('accessToken')}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(newPrompt),
+			})
+				.then((res) => {
+					console.log('res ', res);
+					return res.json();
+				})
+				.then((data) => {
+					if (data?.success) {
+						console.log('prompt data ', data);
+						console.log('prompt data message', data?.message);
+						router.push('/');
+					} else {
+						console.log('Something went wrong!');
+					}
+				})
+				.catch((err) => {
+					console.log('create prompt error', err);
+				});
 		} catch (error) {
 			console.log(error);
 		} finally {
