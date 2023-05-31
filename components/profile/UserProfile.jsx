@@ -6,14 +6,14 @@ import Profile from './Profile';
 const UserProfile = ({ id, userName }) => {
 	const [userPosts, setUserPosts] = useState([]);
 
+	const fetchPosts = async () => {
+		const response = await fetch(`/api/users/${id}/posts`);
+		const data = await response.json();
+
+		setUserPosts(data?.data);
+	};
+
 	useEffect(() => {
-		const fetchPosts = async () => {
-			const response = await fetch(`/api/users/${id}/posts`);
-			const data = await response.json();
-
-			setUserPosts(data?.data);
-		};
-
 		if (id) fetchPosts();
 	}, [id]);
 

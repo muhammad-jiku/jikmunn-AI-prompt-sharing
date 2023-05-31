@@ -15,20 +15,21 @@ const UpdatePrompt = () => {
 		tag: '',
 	});
 
+	const getPromptDetails = async () => {
+		const response = await fetch(`/api/prompt/${promptId}`);
+		const data = await response.json();
+
+		setPost({
+			prompt: data.data.prompt,
+			tag: data.data.tag,
+		});
+	};
+
 	useEffect(() => {
-		const getPromptDetails = async () => {
-			const response = await fetch(`/api/prompt/${promptId}`);
-			const data = await response.json();
-
-			setPost({
-				prompt: data.data.prompt,
-				tag: data.data.tag,
-			});
-		};
-
 		if (promptId) getPromptDetails();
 	}, [promptId]);
 
+	//  update prompt
 	const updatePrompt = async (e) => {
 		e.preventDefault();
 		setIsSubmitting(true);
@@ -50,13 +51,13 @@ const UpdatePrompt = () => {
 				body: JSON.stringify(updatedPromptData),
 			})
 				.then((res) => {
-					console.log('res ', res);
+					// console.log('res ', res);
 					return res.json();
 				})
 				.then((data) => {
 					if (data?.success) {
-						console.log('prompt updated data ', data);
-						console.log('prompt updated data message', data?.message);
+						// console.log('prompt updated data ', data);
+						// console.log('prompt updated data message', data?.message);
 						router.push('/');
 					} else {
 						console.log('Something went wrong!');

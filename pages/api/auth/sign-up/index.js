@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 	const { username, email, password } = await req.body;
 
 	if (req.method === 'POST') {
-		// Process a POST request
+		// Sign up method
 		try {
 			await connectToDB();
 			console.log('backend info', { username, email, password });

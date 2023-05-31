@@ -35,13 +35,13 @@ const CreatePrompt = () => {
 				body: JSON.stringify(newPrompt),
 			})
 				.then((res) => {
-					console.log('res ', res);
+					// console.log('res ', res);
 					return res.json();
 				})
 				.then((data) => {
 					if (data?.success) {
-						console.log('prompt data ', data);
-						console.log('prompt data message', data?.message);
+						// console.log('prompt data ', data);
+						// console.log('prompt data message', data?.message);
 						router.push('/');
 					} else {
 						console.log('Something went wrong!');

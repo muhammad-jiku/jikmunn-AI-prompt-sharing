@@ -13,7 +13,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 	const router = useRouter();
 
 	const handleProfileClick = () => {
-		console.log(post);
+		// console.log(post);
 
 		if (post.creator._id === session?.user.id) return router.push('/profile');
 
@@ -34,7 +34,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 					onClick={handleProfileClick}
 				>
 					<Image
-						src={post.creator.image}
+						src={post?.creator?.image || '/assets/images/profile.svg'}
 						alt='user_image'
 						width={40}
 						height={40}

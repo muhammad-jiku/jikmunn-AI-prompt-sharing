@@ -29,10 +29,8 @@ export default function SignIn() {
 				redirect: false,
 			});
 
-			console.log('credentials data', data);
+			// console.log('credentials data', data);
 			if (data?.ok) {
-				// window.location.href = '/';
-
 				router.push(data?.url);
 			}
 		} catch (err) {

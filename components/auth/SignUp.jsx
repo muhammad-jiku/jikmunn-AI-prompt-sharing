@@ -14,7 +14,7 @@ export default function SignUp() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(username, email, password);
+		// console.log(username, email, password);
 
 		const newUser = {
 			username,
@@ -32,13 +32,13 @@ export default function SignUp() {
 			body: JSON.stringify(newUser),
 		})
 			.then((res) => {
-				console.log('res ', res);
+				// console.log('res ', res);
 				return res.json();
 			})
 			.then((data) => {
 				if (data?.success) {
-					console.log('sign up data ', data);
-					console.log('sign up data message', data?.message);
+					// console.log('sign up data ', data);
+					// console.log('sign up data message', data?.message);
 					router.push('/');
 				} else {
 					console.log('Something went wrong!');

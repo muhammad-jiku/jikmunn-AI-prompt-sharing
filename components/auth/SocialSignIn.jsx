@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 
 const SocialSignIn = () => {
 	const handleGoogleLogin = async () => {
-		console.log('google sign in');
+		// console.log('google sign in');
 		try {
 			await signIn('google', {
 				callbackUrl: '/',
@@ -18,7 +18,7 @@ const SocialSignIn = () => {
 	};
 
 	const handleGithubLogin = async () => {
-		console.log('github sign in');
+		// console.log('github sign in');
 		try {
 			await signIn('github', {
 				callbackUrl: '/',

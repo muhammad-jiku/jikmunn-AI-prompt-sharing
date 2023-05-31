@@ -31,7 +31,7 @@ const Feed = () => {
 	};
 
 	useEffect(() => {
-		console.log(allPosts);
+		// console.log(allPosts);
 
 		fetchPosts();
 	}, []);
