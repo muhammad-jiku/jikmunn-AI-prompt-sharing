@@ -35,18 +35,36 @@ const UpdatePrompt = () => {
 
 		if (!promptId) return alert('Missing PromptId!');
 
-		try {
-			const response = await fetch(`/api/prompt/${promptId}`, {
-				method: 'PATCH',
-				body: JSON.stringify({
-					prompt: post.prompt,
-					tag: post.tag,
-				}),
-			});
+		const updatePrompt = {
+			prompt: post.prompt,
+			tag: post.tag,
+		};
 
-			if (response.ok) {
-				router.push('/');
-			}
+		try {
+			await fetch(`/api/prompt/${promptId}`, {
+				method: 'PATCH',
+				headers: {
+					// authorization: `Bearer ${localStorage?.getItem('accessToken')}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatePrompt),
+			})
+				.then((res) => {
+					console.log('res ', res);
+					return res.json();
+				})
+				.then((data) => {
+					if (data?.success) {
+						console.log('prompt updated data ', data);
+						console.log('prompt updated data message', data?.message);
+						router.push('/');
+					} else {
+						console.log('Something went wrong!');
+					}
+				})
+				.catch((err) => {
+					console.log('create prompt error', err);
+				});
 		} catch (error) {
 			console.log(error);
 		} finally {
