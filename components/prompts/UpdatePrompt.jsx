@@ -21,8 +21,8 @@ const UpdatePrompt = () => {
 			const data = await response.json();
 
 			setPost({
-				prompt: data.prompt,
-				tag: data.tag,
+				prompt: data.data.prompt,
+				tag: data.data.tag,
 			});
 		};
 
