@@ -35,7 +35,7 @@ const UpdatePrompt = () => {
 
 		if (!promptId) return alert('Missing PromptId!');
 
-		const updatePrompt = {
+		const updatedPromptData = {
 			prompt: post.prompt,
 			tag: post.tag,
 		};
@@ -47,7 +47,7 @@ const UpdatePrompt = () => {
 					// authorization: `Bearer ${localStorage?.getItem('accessToken')}`,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(updatePrompt),
+				body: JSON.stringify(updatedPromptData),
 			})
 				.then((res) => {
 					console.log('res ', res);

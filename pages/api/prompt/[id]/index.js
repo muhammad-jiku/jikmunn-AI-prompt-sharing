@@ -93,9 +93,7 @@ export default async function handler(req, res) {
 				message: 'Something went wrong',
 			});
 		}
-	}
-
-	if (req.method == 'PATCH') {
+	} else if (req.method == 'PATCH') {
 		try {
 			await connectToDB();
 
@@ -128,9 +126,26 @@ export default async function handler(req, res) {
 				message: 'Something went wrong',
 			});
 		}
-	}
+	} else if (req.method === 'DELETE') {
+		try {
+			await connectToDB();
+			// Find the prompt by ID and remove it
+			await Prompt.findByIdAndRemove({ _id: id });
 
-	return res.status(500).json({
-		message: 'Something went wrong',
-	});
+			res.status(200).json({
+				success: true,
+				message: 'Prompt Info deleted successfully!',
+			});
+		} catch (error) {
+			console.log(error);
+			return res.status(500).json({
+				success: false,
+				message: 'Something went wrong',
+			});
+		}
+	} else {
+		return res.status(500).json({
+			message: 'Something went wrong',
+		});
+	}
 }
